@@ -1,0 +1,5 @@
+# デフォルトの無視ファイル
+/shelf/
+/workspace.xml
+# エディターベースの HTTP クライアントリクエスト
+/httpRequests/
