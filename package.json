@@ -21,7 +21,7 @@
     "eject": "react-scripts eject",
     "deploy": "npm run build && gh-pages -d build"
   },
-  "homepage": "https://uesyuu.github.io/tsume_cube/",
+  "homepage": "./",
   "eslintConfig": {
     "extends": [
       "react-app",
