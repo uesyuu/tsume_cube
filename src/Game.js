@@ -4,6 +4,7 @@ import moment from "moment";
 import scrambleLib from './lib/scramble'
 import timeLib from './lib/time'
 import inverse from './lib/inverse'
+import {TwitterShareButton, TwitterIcon} from 'react-share';
 import {
     AppBar,
     Button,
@@ -57,15 +58,15 @@ function Game(props) {
     const [mySolution, setMySolution] = useState([]);
     const [mySolutionStr, setMySolutionStr] = useState('');
     const [isCorrect, setIsCorrect] = useState(false);
-    const [ incorrectMessage, setIncorrectMessage ] = useState(null)
-    const [ storageData, setStorageData ] = useState({
+    const [incorrectMessage, setIncorrectMessage] = useState(null)
+    const [storageData, setStorageData] = useState({
         '5': [],
         '6': [],
         '7': []
     })
 
     useEffect(() => {
-        if(localStorage.storageData) {
+        if (localStorage.storageData) {
             const data = JSON.parse(localStorage.storageData)
             setStorageData(data)
         }
@@ -130,7 +131,7 @@ function Game(props) {
         if (min2phase.solve(min2phase.fromScramble(inverse.inverse(shortScramble)))
             === min2phase.solve(min2phase.fromScramble(mySolutionStr))) {
             stopTimer();
-            const realTimeTmp  = (new Date().getTime() - startDateTime) / 1000
+            const realTimeTmp = (new Date().getTime() - startDateTime) / 1000
             const storageDataTmp = {...storageData}
             storageDataTmp[moveCount.toString()].push(realTimeTmp)
             localStorage.setItem('storageData', JSON.stringify(storageDataTmp))
@@ -180,7 +181,7 @@ function Game(props) {
                     <Typography>自分の回答: {mySolutionStr}</Typography>
                 </Box>
                 <Box className={classes.errorDisplay} display={"flex"} justifyContent={"center"}>
-                    <ErrorDisplay message={incorrectMessage} />&nbsp;
+                    <ErrorDisplay message={incorrectMessage}/>&nbsp;
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
                     <MyButton onClick={judgeSolution}>回答する</MyButton>
@@ -201,12 +202,20 @@ function Game(props) {
                 <DialogContent>
                     <DialogContentText align={"center"}>
                         お見事!<br/>
-                        かかった時間: {timeLib.format(realTime)}
+                        かかった時間: {timeLib.format(realTime)}<br/>
+
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={startGame}>もう一度</Button>
-                    <Button onClick={() => props.history.push('/')}>ホームに戻る</Button>
+                    <TwitterShareButton url={`${moveCount}手の詰めキューブを${realTime}秒で解きました！https://uesyuu.github.io/tsume_cube/`}>
+                        <Typography variant='body2'>Twitterでシェア</Typography>
+                    </TwitterShareButton>
+                    <Button onClick={startGame}>
+                        <Typography variant='body2'>もう一度</Typography>
+                    </Button>
+                    <Button onClick={() => props.history.push('/')}>
+                        <Typography variant='body2'>ホームに戻る</Typography>
+                    </Button>
                 </DialogActions>
             </Dialog>
         </div>
