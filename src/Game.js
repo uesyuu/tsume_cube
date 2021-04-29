@@ -207,7 +207,7 @@ function Game(props) {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <TwitterShareButton url={`${moveCount}手の詰めキューブを${realTime}秒で解きました！https://uesyuu.github.io/tsume_cube/`}>
+                    <TwitterShareButton url={`${moveCount}手の詰めキューブを${timeLib.format(realTime)}で解きました！https://uesyuu.github.io/tsume_cube/`}>
                         <Typography variant='body2'>Twitterでシェア</Typography>
                     </TwitterShareButton>
                     <Button onClick={startGame}>
