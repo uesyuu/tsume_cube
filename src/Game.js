@@ -59,9 +59,9 @@ function Game(props) {
     const [isCorrect, setIsCorrect] = useState(false);
     const [ incorrectMessage, setIncorrectMessage ] = useState(null)
     const [ storageData, setStorageData ] = useState({
-        '5': [555],
-        '6': [666],
-        '7': [777]
+        '5': [],
+        '6': [],
+        '7': []
     })
 
     useEffect(() => {
