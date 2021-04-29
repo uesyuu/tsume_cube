@@ -1,9 +1,8 @@
 import React from "react";
 import {AppBar, Button, makeStyles, Toolbar, Typography} from "@material-ui/core";
-import {Link} from "react-router-dom";
 import Box from "@material-ui/core/Box";
 
-const About = () => {
+const About = (props) => {
     const useStyles = makeStyles((theme) => ({
         container: {
             margin: '40px auto',
@@ -39,8 +38,8 @@ const About = () => {
                     </Typography>
                 </Box>
                 <Box className={classes.link} display={"flex"} justifyContent={"center"}>
-                    <Button variant='contained' size='large'>
-                        <Link to='/'>戻る</Link>
+                    <Button variant='contained' onClick={() => props.history.push('/')}>
+                        戻る
                     </Button>
                 </Box>
             </Box>
