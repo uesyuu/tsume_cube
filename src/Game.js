@@ -47,7 +47,7 @@ function Game(props) {
         ["F", "F'", "F2"],
         ["B", "B'", "B2"]
     ]
-    const moveCount = Number(props.location.state.moveCount)
+    const moveCount = props.location.state ? Number(props.location.state.moveCount) : 5
 
     const intervalRef = useRef(null);
     const [time, setTime] = useState(0);
@@ -176,7 +176,7 @@ function Game(props) {
                     <Typography variant='h5'>{moment(time * 1000).format('mm:ss')}</Typography>
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
-                    <Typography>スクランブル</Typography>
+                    <Typography>{moveCount}手スクランブル</Typography>
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
                     <Typography className={classes.display}>{scramble}</Typography>
