@@ -131,7 +131,7 @@ function Game(props) {
 
     const judgeSolution = () => {
         if (min2phase.solve(min2phase.fromScramble(inverse.inverse(shortScramble)))
-            === min2phase.solve(min2phase.fromScramble(mySolutionStr))) {
+            === min2phase.solve(min2phase.fromScramble(mySolutionStr)) && mySolution.length === moveCount) {
             stopTimer();
             const realTimeTmp = (new Date().getTime() - startDateTime) / 1000
             const storageDataTmp = {...storageData}
