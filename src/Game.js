@@ -191,7 +191,7 @@ function Game(props) {
                     <ErrorDisplay message={incorrectMessage}/>&nbsp;
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
-                    <MyButton onClick={giveUpGame}>答えを見る</MyButton>
+                    <MyButton onClick={giveUpGame}>降参して答えを見る</MyButton>
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
                     <MyButton onClick={judgeSolution}>回答する</MyButton>
