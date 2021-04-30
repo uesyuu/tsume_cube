@@ -74,7 +74,7 @@ const scrambleLib = (function () {
                     scr1ListRes[scr1ListRes.length - (count + 1)][1] = "";
                     scr2ListRes.shift();
                     flag = false;
-                } else if ((scr1List[scr1List.length - (count + 1)][1] === "" && scr2List[count][1] === "")
+                } else if ((scr1List[scr1List.length - (count + 1)][1] === "" && scr2List[count][1] === "2")
                     || (scr1List[scr1List.length - (count + 1)][1] === "2" && scr2List[count][1] === "")) {
                     scr1ListRes[scr1ListRes.length - (count + 1)][1] = "'";
                     scr2ListRes.shift();
