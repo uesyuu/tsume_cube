@@ -15,7 +15,7 @@ const NotationButton = (props) => {
             className={classes.content}
             onClick={props.onClick}
             variant={"contained"}
-            color={"secondary"}
+            color={"default"}
         >{props.children}</Button>
     )
 }

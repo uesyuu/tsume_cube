@@ -64,6 +64,7 @@ function Game(props) {
         '6': [],
         '7': []
     })
+    const [giveUp, setGiveUp] = useState(false)
 
     useEffect(() => {
         if (localStorage.storageData) {
@@ -93,6 +94,7 @@ function Game(props) {
         setMySolution([])
         setMySolutionStr('')
         setIsCorrect(false)
+        setGiveUp(false)
         makeScramble();
         startTimer()
     }
@@ -184,6 +186,9 @@ function Game(props) {
                     <ErrorDisplay message={incorrectMessage}/>&nbsp;
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
+                    <MyButton onClick={() => setGiveUp(true)}>答えを見る</MyButton>
+                </Box>
+                <Box display={"flex"} justifyContent={"center"}>
                     <MyButton onClick={judgeSolution}>回答する</MyButton>
                     <MyButton onClick={removeMove}>1文字削除</MyButton>
                 </Box>
@@ -203,17 +208,35 @@ function Game(props) {
                     <DialogContentText align={"center"}>
                         お見事!<br/>
                         かかった時間: {timeLib.format(realTime)}<br/>
-
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <TwitterShareButton url={`${moveCount}手の詰めキューブを${timeLib.format(realTime)}で解きました！https://uesyuu.github.io/tsume_cube/`}>
-                        <Typography variant='body2'>Twitterでシェア</Typography>
-                    </TwitterShareButton>
-                    <Button onClick={startGame}>
+                    <Button variant='contained' color='primary'>
+                        <TwitterShareButton
+                            url={`${moveCount}手の詰めキューブを${timeLib.format(realTime)}で解きました！https://uesyuu.github.io/tsume_cube/`}>
+                            <Typography variant='body2'>Twitterでシェア</Typography>
+                        </TwitterShareButton>
+                    </Button>
+                    <Button variant='contained' color='primary' onClick={startGame}>
                         <Typography variant='body2'>もう一度</Typography>
                     </Button>
-                    <Button onClick={() => props.history.push('/')}>
+                    <Button variant='contained' color='primary' onClick={() => props.history.push('/')}>
+                        <Typography variant='body2'>ホームに戻る</Typography>
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog open={giveUp}>
+                <DialogTitle>残念!</DialogTitle>
+                <DialogContent>
+                    <DialogContentText align='center'>
+                        解法: {inverse.inverse(shortScramble)}<br/>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button variant='contained' color='primary' onClick={startGame}>
+                        <Typography variant='body2'>もう一度</Typography>
+                    </Button>
+                    <Button variant='contained' color='primary' onClick={() => props.history.push('/')}>
                         <Typography variant='body2'>ホームに戻る</Typography>
                     </Button>
                 </DialogActions>
