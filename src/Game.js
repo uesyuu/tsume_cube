@@ -156,6 +156,11 @@ function Game(props) {
         return tmpSolutionStr;
     }
 
+    const giveUpGame = () => {
+        stopTimer()
+        setGiveUp(true)
+    }
+
     return (
         <div>
             <AppBar position={"relative"}>
@@ -186,7 +191,7 @@ function Game(props) {
                     <ErrorDisplay message={incorrectMessage}/>&nbsp;
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
-                    <MyButton onClick={() => setGiveUp(true)}>答えを見る</MyButton>
+                    <MyButton onClick={giveUpGame}>答えを見る</MyButton>
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
                     <MyButton onClick={judgeSolution}>回答する</MyButton>
