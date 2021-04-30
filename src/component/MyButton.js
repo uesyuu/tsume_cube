@@ -5,7 +5,7 @@ const MyButton = (props) => {
     const useStyles = makeStyles((theme) => ({
         content: {
             margin: theme.spacing(1),
-            width: '120px',
+            width: props.width,
             height: '30px'
         }
     }))

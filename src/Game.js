@@ -181,6 +181,9 @@ function Game(props) {
                 <Box display={"flex"} justifyContent={"center"}>
                     <Typography className={classes.display}>{scramble}</Typography>
                 </Box>
+                <Box display={"flex"} justifyContent={"center"}>
+                    <MyButton width='200px' onClick={giveUpGame}>降参して答えを見る</MyButton>
+                </Box>
                 {/*<Box display={"flex"} justifyContent={"center"}>*/}
                 {/*    <Typography>Correct solution is {inverse.inverse(shortScramble)}</Typography>*/}
                 {/*</Box>*/}
@@ -191,11 +194,8 @@ function Game(props) {
                     <ErrorDisplay message={incorrectMessage}/>&nbsp;
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
-                    <MyButton onClick={giveUpGame}>降参して答えを見る</MyButton>
-                </Box>
-                <Box display={"flex"} justifyContent={"center"}>
-                    <MyButton onClick={judgeSolution}>回答する</MyButton>
-                    <MyButton onClick={removeMove}>1文字削除</MyButton>
+                    <MyButton width='120px' onClick={judgeSolution}>回答する</MyButton>
+                    <MyButton width='120px' onClick={removeMove}>1文字削除</MyButton>
                 </Box>
                 {notationList.map((oneNotationList, i) =>
                     <Box display={"flex"} justifyContent={"center"} key={i + 1}>
