@@ -1,4 +1,9 @@
 import React, {useEffect, useRef, useState} from "react";
+import enJson from './locales/en.json'
+import jaJson from './locales/ja.json'
+import i18n from 'i18next'
+import {initReactI18next} from "react-i18next";
+import {useTranslation} from "react-i18next";
 import min2phase from './lib/min2phase';
 import moment from "moment";
 import scrambleLib from './lib/scramble'
@@ -19,6 +24,16 @@ import Box from "@material-ui/core/Box";
 import MyButton from "./component/MyButton";
 import NotationButton from "./component/NotationButton";
 import ErrorDisplay from "./component/ErrorDisplay";
+
+i18n.use(initReactI18next).init({
+    resources: {
+        en: {translation: enJson},
+        ja: {translation: jaJson}
+    },
+    lng: 'ja',
+    fallbackLng: 'ja',
+    interpolation: {escapeValue: false}
+})
 
 function Game(props) {
     const useStyles = makeStyles((theme) => ({
@@ -67,6 +82,16 @@ function Game(props) {
         '8': []
     })
     const [giveUp, setGiveUp] = useState(false)
+
+    const [t, i18n] = useTranslation()
+
+    useEffect(() => {
+        if (localStorage.lang) {
+            i18n.changeLanguage(localStorage.lang)
+        } else {
+            i18n.changeLanguage('ja')
+        }
+    }, [i18n])
 
     useEffect(() => {
         if (localStorage.storageData) {
@@ -143,7 +168,7 @@ function Game(props) {
 
     const judgeSolution = () => {
         if (mySolution.length !== moveCount) {
-            setIncorrectMessage('手数が違います!')
+            setIncorrectMessage(t('手数が違います!'))
             setTimeout(() => {
                 setIncorrectMessage(null)
             }, 3000)
@@ -158,7 +183,7 @@ function Game(props) {
             setRealTime(realTimeTmp)
             setStorageData(storageDataTmp)
         } else {
-            setIncorrectMessage('不正解!')
+            setIncorrectMessage(t('不正解!'))
             setTimeout(() => {
                 setIncorrectMessage(null)
             }, 3000)
@@ -182,37 +207,37 @@ function Game(props) {
         <div>
             <AppBar position={"relative"}>
                 <Toolbar>
-                    <Typography>詰めキューブ</Typography>
+                    <Typography>{t('詰めキューブ')}</Typography>
                 </Toolbar>
             </AppBar>
             <Box className={classes.container} maxWidth={"xs"} display={"flex"} flexDirection={"column"}>
                 <Box display={"flex"} justifyContent={"space-between"}>
                     <Button variant='contained' onClick={() => props.history.push('/')}>
-                        戻る
+                        {t('戻る')}
                     </Button>
                     <Typography variant='h5'>{moment(time * 1000).format('mm:ss')}</Typography>
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
-                    <Typography>{moveCount}手スクランブル</Typography>
+                    <Typography>{moveCount}{t('手スクランブル')}</Typography>
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
                     <Typography className={classes.display}>{scramble}</Typography>
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
-                    <MyButton width='200px' onClick={giveUpGame}>降参して答えを見る</MyButton>
+                    <MyButton width='200px' onClick={giveUpGame}>{t('降参して答えを見る')}</MyButton>
                 </Box>
                 {/*<Box display={"flex"} justifyContent={"center"}>*/}
                 {/*    <Typography>Correct solution is {inverse.inverse(shortScramble)}</Typography>*/}
                 {/*</Box>*/}
                 <Box display={"flex"} justifyContent={"center"} className={classes.inputContent}>
-                    <Typography>自分の回答: {mySolutionStr}</Typography>
+                    <Typography>{t('自分の回答')}: {mySolutionStr}</Typography>
                 </Box>
                 <Box className={classes.errorDisplay} display={"flex"} justifyContent={"center"}>
                     <ErrorDisplay message={incorrectMessage}/>&nbsp;
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
-                    <MyButton width='120px' onClick={judgeSolution}>回答する</MyButton>
-                    <MyButton width='120px' onClick={removeMove}>1文字削除</MyButton>
+                    <MyButton width='120px' onClick={judgeSolution}>{t('回答する')}</MyButton>
+                    <MyButton width='120px' onClick={removeMove}>{t('1文字削除')}</MyButton>
                 </Box>
                 {notationList.map((oneNotationList, i) =>
                     <Box display={"flex"} justifyContent={"center"} key={i + 1}>
@@ -225,43 +250,50 @@ function Game(props) {
                 )}
             </Box>
             <Dialog open={isCorrect}>
-                <DialogTitle>正解!</DialogTitle>
+                <DialogTitle>{t('正解!')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText align={"center"}>
-                        お見事!<br/>
-                        かかった時間: {timeLib.format(realTime)}<br/>
+                        {t('お見事!')}<br/>
+                        {t('かかった時間')}: {timeLib.format(realTime)}<br/>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button variant='contained' color='primary'>
                         <TwitterShareButton
-                            url={
-                                `${moveCount}手の詰めキューブを${timeLib.format(realTime)}で解きました！\n解いた問題: ${scramble}\nhttps://uesyuu.github.io/tsume_cube/`
-                            }>
-                            <Typography variant='body2'>Twitterでシェア</Typography>
+                            url={t('I solved a')
+                            + moveCount
+                            + t('手の詰めキューブを')
+                            + timeLib.format(realTime)
+                            + t('で解きました！')
+                            + '\n'
+                            + t('解いた問題')
+                            + ': '
+                            + scramble
+                            + '\nhttps://uesyuu.github.io/tsume_cube/'}>
+                            <Typography variant='body2'>{t('Twitterでシェア')}</Typography>
                         </TwitterShareButton>
                     </Button>
                     <Button variant='contained' color='primary' onClick={startGame}>
-                        <Typography variant='body2'>もう一度</Typography>
+                        <Typography variant='body2'>{t('もう一度')}</Typography>
                     </Button>
                     <Button variant='contained' color='primary' onClick={() => props.history.push('/')}>
-                        <Typography variant='body2'>ホームに戻る</Typography>
+                        <Typography variant='body2'>{t('ホームに戻る')}</Typography>
                     </Button>
                 </DialogActions>
             </Dialog>
             <Dialog open={giveUp}>
-                <DialogTitle>残念!</DialogTitle>
+                <DialogTitle>{t('残念!')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText align='center'>
-                        解法: {inverse.inverse(shortScramble)}<br/>
+                        {t('解法')}: {inverse.inverse(shortScramble)}<br/>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button variant='contained' color='primary' onClick={startGame}>
-                        <Typography variant='body2'>もう一度</Typography>
+                        <Typography variant='body2'>{t('もう一度')}</Typography>
                     </Button>
                     <Button variant='contained' color='primary' onClick={() => props.history.push('/')}>
-                        <Typography variant='body2'>ホームに戻る</Typography>
+                        <Typography variant='body2'>{t('ホームに戻る')}</Typography>
                     </Button>
                 </DialogActions>
             </Dialog>

@@ -1,11 +1,16 @@
 import React, {useEffect, useState} from "react";
+import enJson from './locales/en.json'
+import jaJson from './locales/ja.json'
+import i18n from 'i18next'
+import {initReactI18next} from "react-i18next";
+import {useTranslation} from "react-i18next";
 import {
     AppBar,
     Button,
     makeStyles,
     TableBody,
     TableCell,
-    TableContainer,
+    TableContainer, TableHead,
     TableRow, Tabs,
     Toolbar,
     Typography
@@ -15,6 +20,16 @@ import Table from '@material-ui/core/Table';
 import Tab from '@material-ui/core/Tab';
 import timeLib from './lib/time'
 
+i18n.use(initReactI18next).init({
+    resources: {
+        en: {translation: enJson},
+        ja: {translation: jaJson}
+    },
+    lng: 'ja',
+    fallbackLng: 'ja',
+    interpolation: {escapeValue: false}
+})
+
 const Results = (props) => {
     const useStyles = makeStyles((theme) => ({
         container: {
@@ -22,15 +37,13 @@ const Results = (props) => {
             padding: '20px',
             maxWidth: '500px'
         },
-        link: {
-            margin: '20px 0'
-        },
         tab: {
             minWidth: '60px'
         }
     }))
     const classes = useStyles()
 
+    const [t, i18n] = useTranslation()
     const [ storageData, setStorageData ] = useState({
         '4': [],
         '5': [],
@@ -39,6 +52,14 @@ const Results = (props) => {
         '8': []
     })
     const [ tabValue, setTabValue] = useState(0)
+
+    useEffect(() => {
+        if (localStorage.lang) {
+            i18n.changeLanguage(localStorage.lang)
+        } else {
+            i18n.changeLanguage('ja')
+        }
+    }, [i18n])
 
     useEffect(() => {
         if(localStorage.storageData) {
@@ -65,33 +86,33 @@ const Results = (props) => {
         <div>
             <AppBar position={"relative"}>
                 <Toolbar>
-                    <Typography>詰めキューブ</Typography>
+                    <Typography>{t('詰めキューブ')}</Typography>
                 </Toolbar>
             </AppBar>
             <Box className={classes.container} maxWidth={"xs"} display={"flex"} flexDirection={"column"}>
                 <Box display={"flex"}>
                     <Button variant='contained' onClick={() => props.history.push('/')}>
-                        戻る
+                        {t('戻る')}
                     </Button>
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
-                    <Typography variant='h3'>記録</Typography>
+                    <Typography variant='h3'>{t('記録')}</Typography>
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
                     <Tabs value={tabValue} onChange={handleTabChanged} centered>
-                        <Tab className={classes.tab} label='4手' />
-                        <Tab className={classes.tab} label='5手' />
-                        <Tab className={classes.tab} label='6手' />
-                        <Tab className={classes.tab} label='7手' />
-                        <Tab className={classes.tab} label='8手' />
+                        <Tab className={classes.tab} label={'4' + t('手')} />
+                        <Tab className={classes.tab} label={'5' + t('手')} />
+                        <Tab className={classes.tab} label={'6' + t('手')} />
+                        <Tab className={classes.tab} label={'7' + t('手')} />
+                        <Tab className={classes.tab} label={'8' + t('手')} />
                     </Tabs>
                 </Box>
-                <Box className={classes.link} display={"flex"} justifyContent={"center"}>
-                    <TabPanel value={tabValue} index={0} storageData={storageData['4']} />
-                    <TabPanel value={tabValue} index={1} storageData={storageData['5']} />
-                    <TabPanel value={tabValue} index={2} storageData={storageData['6']} />
-                    <TabPanel value={tabValue} index={3} storageData={storageData['7']} />
-                    <TabPanel value={tabValue} index={4} storageData={storageData['8']} />
+                <Box display={"flex"} justifyContent={"center"}>
+                    <TabPanel value={tabValue} index={0} storageData={storageData['4']} t={t} />
+                    <TabPanel value={tabValue} index={1} storageData={storageData['5']} t={t} />
+                    <TabPanel value={tabValue} index={2} storageData={storageData['6']} t={t} />
+                    <TabPanel value={tabValue} index={3} storageData={storageData['7']} t={t} />
+                    <TabPanel value={tabValue} index={4} storageData={storageData['8']} t={t} />
                 </Box>
             </Box>
         </div>
@@ -110,13 +131,19 @@ const TabPanel = (props) => {
         <div hidden={props.value !== props.index}>
             <TableContainer className={classes.table}>
                 <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align='center'>{props.t('ランク')}</TableCell>
+                            <TableCell align='center'>{props.t('タイム(秒)')}</TableCell>
+                        </TableRow>
+                    </TableHead>
                     <TableBody>
                         {props.storageData
                             .sort((a, b) => a - b)
                             .slice(0, 10)
                             .map((item, index) =>
                                 <TableRow key={index}>
-                                    <TableCell align='center'>{index + 1}位</TableCell>
+                                    <TableCell align='center'>{index + 1}{props.t('位')}</TableCell>
                                     <TableCell align='center'>{timeLib.format(item)}</TableCell>
                                 </TableRow>
                             )}
