@@ -142,8 +142,13 @@ function Game(props) {
     };
 
     const judgeSolution = () => {
-        if (min2phase.solve(min2phase.fromScramble(inverse.inverse(shortScramble)))
-            === min2phase.solve(min2phase.fromScramble(mySolutionStr)) && mySolution.length === moveCount) {
+        if (mySolution.length !== moveCount) {
+            setIncorrectMessage('手数が違います!')
+            setTimeout(() => {
+                setIncorrectMessage(null)
+            }, 3000)
+        } else if (min2phase.solve(min2phase.fromScramble(inverse.inverse(shortScramble)))
+            === min2phase.solve(min2phase.fromScramble(mySolutionStr))) {
             stopTimer();
             const realTimeTmp = (new Date().getTime() - startDateTime) / 1000
             const storageDataTmp = {...storageData}
