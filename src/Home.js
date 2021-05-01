@@ -79,7 +79,7 @@ const Home = (props) => {
                     >{t('言語変更')}</Button>
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
-                    <Typography variant='h3'>{t('詰めキューブ')}</Typography>
+                    <Typography variant='h3' align='center'>{t('詰めキューブ')}</Typography>
                 </Box>
                 <Box className={classes.link} display={"flex"} justifyContent={"center"}>
                     <Button variant='contained' size='large' onClick={() => setOpen(true)}>
