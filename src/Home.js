@@ -16,7 +16,7 @@ const Home = (props) => {
     const classes = useStyles()
 
     const [open, setOpen] = useState(false)
-    const moveCountList = [5, 6, 7]
+    const moveCountList = [4, 5, 6, 7, 8]
 
     return (
         <div>

@@ -60,16 +60,28 @@ function Game(props) {
     const [isCorrect, setIsCorrect] = useState(false);
     const [incorrectMessage, setIncorrectMessage] = useState(null)
     const [storageData, setStorageData] = useState({
+        '4': [],
         '5': [],
         '6': [],
-        '7': []
+        '7': [],
+        '8': []
     })
     const [giveUp, setGiveUp] = useState(false)
 
     useEffect(() => {
         if (localStorage.storageData) {
             const data = JSON.parse(localStorage.storageData)
-            setStorageData(data)
+            if (data['4'] && data['8']) {
+                setStorageData(data)
+            } else {
+                setStorageData({
+                    '4': [],
+                    '5': data['5'],
+                    '6': data['6'],
+                    '7': data['7'],
+                    '8': []
+                })
+            }
         }
         startGame()
         return () => {
