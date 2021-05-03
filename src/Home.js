@@ -16,6 +16,7 @@ import {
     Typography
 } from "@material-ui/core";
 import Box from "@material-ui/core/Box"
+import twophase from './lib/twophase'
 
 i18n.use(initReactI18next).init({
     resources: {
@@ -47,6 +48,10 @@ const Home = (props) => {
     const [open, setOpen] = useState(false)
     const [lang, setLang] = useState('ja')
     const moveCountList = [4, 5, 6, 7, 8]
+
+    useEffect(() => {
+        twophase.initialize()
+    }, [])
 
     useEffect(() => {
         if (localStorage.lang) {

@@ -9,7 +9,8 @@ import moment from "moment";
 import scrambleLib from './lib/scramble'
 import timeLib from './lib/time'
 import inverse from './lib/inverse'
-import {TwitterShareButton, TwitterIcon} from 'react-share';
+import twophase from './lib/twophase'
+import {TwitterShareButton} from 'react-share';
 import {
     AppBar,
     Button,
@@ -117,10 +118,8 @@ function Game(props) {
     const makeScramble = () => {
         const shortScramble = scrambleLib.makeShortScramble(moveCount);
         setShortScramble(shortScramble)
-        const redundantSolution = shortScramble + " B' D' L' F' U' R' B' D' L' F' U' R'";
-        const scr1 = inverse.inverse(min2phase.solve(min2phase.fromScramble(redundantSolution)));
-        const scr2 = "R U F L D B R U F L D B";
-        const redundantScramble = scrambleLib.makeCorrectScramble(scr1, scr2);
+        twophase.initialize()
+        const redundantScramble = inverse.inverse(twophase.solve(shortScramble))
         setScramble(redundantScramble);
     };
 
