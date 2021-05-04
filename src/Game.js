@@ -25,6 +25,7 @@ import Box from "@material-ui/core/Box";
 import MyButton from "./component/MyButton";
 import NotationButton from "./component/NotationButton";
 import ErrorDisplay from "./component/ErrorDisplay";
+import ScrambleImage from "./component/ScrambleImage";
 
 i18n.use(initReactI18next).init({
     resources: {
@@ -225,6 +226,9 @@ function Game(props) {
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
                     <Typography className={classes.display}>{scramble}</Typography>
+                </Box>
+                <Box display={"flex"} justifyContent={"center"}>
+                    <ScrambleImage scramble={scramble}/>
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
                     <MyButton width='200px' onClick={giveUpGame}>{t('降参して答えを見る')}</MyButton>
