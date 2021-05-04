@@ -117,9 +117,10 @@ function Game(props) {
 
     const makeScramble = () => {
         twophase.initialize()
+        let shortScramble = ''
         let redundantScramble = ''
         while (redundantScramble.split(' ').length < 19) {
-            const shortScramble = scrambleLib.makeShortScramble(moveCount);
+            shortScramble = scrambleLib.makeShortScramble(moveCount);
             redundantScramble = inverse.inverse(twophase.solve(shortScramble))
         }
         setShortScramble(shortScramble)
