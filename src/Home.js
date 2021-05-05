@@ -40,6 +40,9 @@ const Home = (props) => {
         },
         changeLangButton: {
             marginBottom: '10px'
+        },
+        button: {
+            width: '160px'
         }
     }))
     const classes = useStyles()
@@ -87,17 +90,17 @@ const Home = (props) => {
                     <Typography variant='h3' align='center'>{t('詰めキューブ')}</Typography>
                 </Box>
                 <Box className={classes.link} display={"flex"} justifyContent={"center"}>
-                    <Button variant='contained' size='large' onClick={() => setOpen(true)}>
+                    <Button className={classes.button} variant='contained' size='large' onClick={() => setOpen(true)}>
                         {t('スタート')}
                     </Button>
                 </Box>
                 <Box className={classes.link} display={"flex"} justifyContent={"center"}>
-                    <Button variant='contained' size='large' onClick={() => props.history.push('/about')}>
+                    <Button className={classes.button} variant='contained' size='large' onClick={() => props.history.push('/about')}>
                         {t('遊び方')}
                     </Button>
                 </Box>
                 <Box className={classes.link} display={"flex"} justifyContent={"center"}>
-                    <Button variant='contained' size='large' onClick={() => props.history.push('/results')}>
+                    <Button className={classes.button} variant='contained' size='large' onClick={() => props.history.push('/results')}>
                         {t('記録')}
                     </Button>
                 </Box>
