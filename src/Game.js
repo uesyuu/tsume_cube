@@ -11,6 +11,7 @@ import timeLib from './lib/time'
 import inverse from './lib/inverse'
 import twophase from './lib/twophase'
 import {TwitterShareButton} from 'react-share';
+import {TwistyPlayer} from "cubing/twisty";
 import {
     AppBar,
     Button,
@@ -83,6 +84,7 @@ function Game(props) {
         '8': []
     })
     const [giveUp, setGiveUp] = useState(false)
+    const [openScramble, setOpenScramble] = useState(false)
 
     const [t, i18n] = useTranslation()
 
@@ -220,14 +222,15 @@ function Game(props) {
                     </Button>
                     <Typography variant='h5'>{moment(time * 1000).format('mm:ss')}</Typography>
                 </Box>
-                <Box display={"flex"} justifyContent={"center"}>
+                <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
                     <Typography>{moveCount}{t('手スクランブル')}</Typography>
+                    <MyButton color='default' onClick={() => setOpenScramble(true)}>{t('スクランブル画像')}</MyButton>
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
                     <Typography className={classes.display}>{scramble}</Typography>
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
-                    <MyButton width='200px' onClick={giveUpGame}>{t('降参して答えを見る')}</MyButton>
+                    <MyButton color='primary' width='200px' onClick={giveUpGame}>{t('降参して答えを見る')}</MyButton>
                 </Box>
                 {/*<Box display={"flex"} justifyContent={"center"}>*/}
                 {/*    <Typography>Correct solution is {inverse.inverse(shortScramble)}</Typography>*/}
@@ -239,8 +242,8 @@ function Game(props) {
                     <ErrorDisplay message={incorrectMessage}/>&nbsp;
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
-                    <MyButton width='120px' onClick={judgeSolution}>{t('回答する')}</MyButton>
-                    <MyButton width='120px' onClick={removeMove}>{t('1文字削除')}</MyButton>
+                    <MyButton color='primary' width='120px' onClick={judgeSolution}>{t('回答する')}</MyButton>
+                    <MyButton color='primary' width='120px' onClick={removeMove}>{t('1文字削除')}</MyButton>
                 </Box>
                 {notationList.map((oneNotationList, i) =>
                     <Box display={"flex"} justifyContent={"center"} key={i + 1}>
@@ -299,6 +302,19 @@ function Game(props) {
                         <Typography variant='body2'>{t('ホームに戻る')}</Typography>
                     </Button>
                 </DialogActions>
+            </Dialog>
+            <Dialog open={openScramble} onClose={() => setOpenScramble(false)}>
+                <DialogContent>
+                    <twisty-player
+                        style={{width: 'fit-content'}}
+                        puzzle="3x3x3"
+                        alg={scramble}
+                        visualization="2D"
+                        hint-facelets="none"
+                        back-view="top-right"
+                        background="none"
+                        control-panel="none"/>
+                </DialogContent>
             </Dialog>
         </div>
     );

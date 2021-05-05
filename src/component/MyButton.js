@@ -16,7 +16,7 @@ const MyButton = (props) => {
             className={classes.content}
             onClick={props.onClick}
             variant={"contained"}
-            color={"primary"}
+            color={props.color}
         >{props.children}</Button>
     )
 }
