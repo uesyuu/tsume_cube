@@ -275,7 +275,7 @@ function Game(props) {
                             + t('解いた問題')
                             + ': '
                             + scramble
-                            + '\nhttps://uesyuu.github.io/tsume_cube/'}>
+                            + '\nhttps://uesyuu.github.io/tsume_cube/ #詰めキューブ'}>
                             <Typography variant='body2'>{t('Twitterでシェア')}</Typography>
                         </TwitterShareButton>
                     </Button>
