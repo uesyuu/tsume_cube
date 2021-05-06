@@ -42,13 +42,14 @@ const Home = (props) => {
             marginBottom: '10px'
         },
         button: {
-            width: '160px'
+            width: '200px'
         }
     }))
     const classes = useStyles()
 
     const [t, i18n] = useTranslation()
     const [open, setOpen] = useState(false)
+    const [openWithVirtual, setOpenWithVirtual] = useState(false)
     const [lang, setLang] = useState('ja')
     const moveCountList = [4, 5, 6, 7, 8]
 
@@ -95,6 +96,12 @@ const Home = (props) => {
                     </Button>
                 </Box>
                 <Box className={classes.link} display={"flex"} justifyContent={"center"}>
+                    <Button className={classes.button} variant='contained' size='large' onClick={() => setOpenWithVirtual(true)}>
+                        {t('バーチャルキューブ')}<br/>
+                        {t('でスタート')}
+                    </Button>
+                </Box>
+                <Box className={classes.link} display={"flex"} justifyContent={"center"}>
                     <Button className={classes.button} variant='contained' size='large' onClick={() => props.history.push('/about')}>
                         {t('遊び方')}
                     </Button>
@@ -111,6 +118,21 @@ const Home = (props) => {
                             <ListItem button key={moveCount}
                                       onClick={() => props.history.push({
                                           pathname: 'game',
+                                          state: {
+                                              moveCount: moveCount
+                                          }
+                                      })}>
+                                <ListItemText primary={t('Challenge') + moveCount + t('手スクランブルに挑戦')}/>
+                            </ListItem>
+                    ))}
+                </List>
+            </Dialog>
+            <Dialog onClose={() => setOpenWithVirtual(false)} open={openWithVirtual}>
+                <List>
+                    {moveCountList.map((moveCount =>
+                            <ListItem button key={moveCount}
+                                      onClick={() => props.history.push({
+                                          pathname: 'gameWithVirtual',
                                           state: {
                                               moveCount: moveCount
                                           }

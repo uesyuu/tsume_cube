@@ -51,7 +51,15 @@ const Results = (props) => {
         '7': [],
         '8': []
     })
+    const [ storageDataWithVirtual, setStorageDataWithVirtual ] = useState({
+        '4': [],
+        '5': [],
+        '6': [],
+        '7': [],
+        '8': []
+    })
     const [ tabValue, setTabValue] = useState(0)
+    const [ subTabValue, setSubTabValue] = useState(0)
 
     useEffect(() => {
         if (localStorage.lang) {
@@ -76,10 +84,19 @@ const Results = (props) => {
                 })
             }
         }
+        if (localStorage.storageDataWithVirtual) {
+            const data = JSON.parse(localStorage.storageDataWithVirtual)
+            setStorageDataWithVirtual(data)
+        }
     }, [])
 
     const handleTabChanged = (event, newValue) => {
         setTabValue(newValue)
+        console.log('TabValue: ', newValue)
+    }
+
+    const handleSubTabChanged = (event, newValue) => {
+        setSubTabValue(newValue)
     }
 
     return (
@@ -100,19 +117,45 @@ const Results = (props) => {
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
                     <Tabs value={tabValue} onChange={handleTabChanged} centered>
-                        <Tab className={classes.tab} label={'4' + t('手')} />
-                        <Tab className={classes.tab} label={'5' + t('手')} />
-                        <Tab className={classes.tab} label={'6' + t('手')} />
-                        <Tab className={classes.tab} label={'7' + t('手')} />
-                        <Tab className={classes.tab} label={'8' + t('手')} />
+                        <Tab className={classes.tab} label={t('通常')} />
+                        <Tab className={classes.tab} label={t('バーチャル')} />
                     </Tabs>
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
-                    <TabPanel value={tabValue} index={0} storageData={storageData['4']} t={t} />
-                    <TabPanel value={tabValue} index={1} storageData={storageData['5']} t={t} />
-                    <TabPanel value={tabValue} index={2} storageData={storageData['6']} t={t} />
-                    <TabPanel value={tabValue} index={3} storageData={storageData['7']} t={t} />
-                    <TabPanel value={tabValue} index={4} storageData={storageData['8']} t={t} />
+                    <div hidden={tabValue !== 0}>
+                        <Tabs value={subTabValue} onChange={handleSubTabChanged} centered>
+                            <Tab className={classes.tab} label={'4' + t('手')} />
+                            <Tab className={classes.tab} label={'5' + t('手')} />
+                            <Tab className={classes.tab} label={'6' + t('手')} />
+                            <Tab className={classes.tab} label={'7' + t('手')} />
+                            <Tab className={classes.tab} label={'8' + t('手')} />
+                        </Tabs>
+                    </div>
+                    <div hidden={tabValue !== 1}>
+                        <Tabs value={subTabValue} onChange={handleSubTabChanged} centered>
+                            <Tab className={classes.tab} label={'4' + t('手')} />
+                            <Tab className={classes.tab} label={'5' + t('手')} />
+                            <Tab className={classes.tab} label={'6' + t('手')} />
+                            <Tab className={classes.tab} label={'7' + t('手')} />
+                            <Tab className={classes.tab} label={'8' + t('手')} />
+                        </Tabs>
+                    </div>
+                </Box>
+                <Box display={"flex"} justifyContent={"center"}>
+                    <div hidden={tabValue !== 0}>
+                        <TabPanel value={subTabValue} index={0} storageData={storageData['4']} t={t} />
+                        <TabPanel value={subTabValue} index={1} storageData={storageData['5']} t={t} />
+                        <TabPanel value={subTabValue} index={2} storageData={storageData['6']} t={t} />
+                        <TabPanel value={subTabValue} index={3} storageData={storageData['7']} t={t} />
+                        <TabPanel value={subTabValue} index={4} storageData={storageData['8']} t={t} />
+                    </div>
+                    <div hidden={tabValue !== 1}>
+                        <TabPanel value={subTabValue} index={0} storageData={storageDataWithVirtual['4']} t={t} />
+                        <TabPanel value={subTabValue} index={1} storageData={storageDataWithVirtual['5']} t={t} />
+                        <TabPanel value={subTabValue} index={2} storageData={storageDataWithVirtual['6']} t={t} />
+                        <TabPanel value={subTabValue} index={3} storageData={storageDataWithVirtual['7']} t={t} />
+                        <TabPanel value={subTabValue} index={4} storageData={storageDataWithVirtual['8']} t={t} />
+                    </div>
                 </Box>
             </Box>
         </div>

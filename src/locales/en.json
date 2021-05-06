@@ -2,6 +2,8 @@
   "言語変更": "日本語に変更",
   "詰めキューブ": "Short moves Scramble Challenge",
   "スタート": "Game start",
+  "バーチャルキューブ": "Game start with",
+  "でスタート": "Virtual Cube",
   "遊び方": "How to play",
   "記録": "Results",
   "Challenge": "Challenge ",
@@ -13,6 +15,8 @@
   "スクランブルが表示されるのでその最短解法を探し出して入力し、回答ボタンを押してください": "A scramble will appear, so find the shortest solution, type it in, and press the Answer button.",
   "正解するとかかった時間が記録され、記録一覧画面で見ることができます": "If you answer correctly, the time taken will be recorded and can be viewed in the record list screen.",
 
+  "通常": "Regular",
+  "バーチャル": "Virtual",
   "手": "",
   "ランク": "Rank",
   "タイム(秒)": "Time (second)",
@@ -22,6 +26,7 @@
   "不正解!": "Incorrect!",
   "手スクランブル": " moves scramble",
   "スクランブル画像": "Image",
+  "スクランブル表示": "Scramble",
   "降参して答えを見る": "Give up",
   "自分の回答": "My solution",
   "回答する": "Answer",
@@ -31,6 +36,7 @@
   "かかった時間": "Time",
   "I solved a": "I solved ",
   "手の詰めキューブを": "-move scramble in ",
+  "手のバーチャル詰めキューブを": "-move scramble with Virtual Cube in ",
   "で解きました！": "seconds.",
   "解いた問題": "Scramble",
   "https://uesyuu.github.io/tsume_cube/": "https://uesyuu.github.io/tsume_cube/",
@@ -38,5 +44,6 @@
   "もう一度": "Retry",
   "ホームに戻る": "home",
   "残念!": "Failure!",
+  "スクランブル": "Scramble",
   "解法": "Solution"
 }
