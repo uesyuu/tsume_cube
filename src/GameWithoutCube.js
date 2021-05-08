@@ -37,7 +37,7 @@ i18n.use(initReactI18next).init({
     interpolation: {escapeValue: false}
 })
 
-function GameWithVirtual(props) {
+function GameWithoutCube(props) {
     const useStyles = makeStyles((theme) => ({
         container: {
             margin: '0 auto',
@@ -86,7 +86,6 @@ function GameWithVirtual(props) {
         '8': []
     })
     const [giveUp, setGiveUp] = useState(false)
-    const [openScramble, setOpenScramble] = useState(false)
 
     const [t, i18n] = useTranslation()
 
@@ -99,8 +98,8 @@ function GameWithVirtual(props) {
     }, [i18n])
 
     useEffect(() => {
-        if (localStorage.storageDataWithVirtual) {
-            const data = JSON.parse(localStorage.storageDataWithVirtual)
+        if (localStorage.storageDataWithoutCube) {
+            const data = JSON.parse(localStorage.storageDataWithoutCube)
             if (!data['2'] || !data['3']) {
                 setStorageData({
                     '2': [],
@@ -164,7 +163,6 @@ function GameWithVirtual(props) {
         tmpSolution.push(move);
         setMySolution(tmpSolution);
         setMySolutionStr(solutionListToString(tmpSolution))
-        judgeSolution(tmpSolution, solutionListToString(tmpSolution))
     };
 
     const removeMove = () => {
@@ -176,26 +174,28 @@ function GameWithVirtual(props) {
         setMySolutionStr(solutionListToString(tmpSolution))
     };
 
-    const judgeSolution = (mySolution, mySolutionStr) => {
-        if (min2phase.solve(min2phase.fromScramble(inverse.inverse(shortScramble)))
+    const judgeSolution = () => {
+        if (mySolution.length !== moveCount) {
+            setIncorrectMessage(t('手数が違います!'))
+            setTimeout(() => {
+                setIncorrectMessage(null)
+            }, 3000)
+        } else if (min2phase.solve(min2phase.fromScramble(inverse.inverse(shortScramble)))
             === min2phase.solve(min2phase.fromScramble(mySolutionStr))) {
-            if (mySolution.length !== moveCount) {
-                setIncorrectMessage(t('手数が違います!'))
-                setTimeout(() => {
-                    setIncorrectMessage(null)
-                }, 3000)
-            } else {
-                stopTimer();
-                const realTimeTmp = (new Date().getTime() - startDateTime) / 1000
-                const storageDataTmp = {...storageData}
-                storageDataTmp[moveCount.toString()].push(realTimeTmp)
-                localStorage.setItem('storageDataWithVirtual', JSON.stringify(storageDataTmp))
-                setIsCorrect(true);
-                setRealTime(realTimeTmp)
-                setStorageData(storageDataTmp)
-            }
+            stopTimer();
+            const realTimeTmp = (new Date().getTime() - startDateTime) / 1000
+            const storageDataTmp = {...storageData}
+            storageDataTmp[moveCount.toString()].push(realTimeTmp)
+            localStorage.setItem('storageDataWithoutCube', JSON.stringify(storageDataTmp))
+            setIsCorrect(true);
+            setRealTime(realTimeTmp)
+            setStorageData(storageDataTmp)
+        } else {
+            setIncorrectMessage(t('不正解!'))
+            setTimeout(() => {
+                setIncorrectMessage(null)
+            }, 3000)
         }
-
     };
 
     const solutionListToString = (solutionList) => {
@@ -227,18 +227,17 @@ function GameWithVirtual(props) {
                 </Box>
                 <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
                     <Typography>{moveCount}{t('手スクランブル')}</Typography>
-                    <MyButton color='default' onClick={() => setOpenScramble(true)}>{t('スクランブル表示')}</MyButton>
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
                     <twisty-player
                         puzzle="3x3x3"
-                        alg={inverse.inverse(scramble + ' ' + mySolutionStr)}
+                        alg={inverse.inverse(scramble)}
+                        visualization="2D"
                         experimental-setup-anchor="end"
                         hint-facelets="none"
                         back-view="none"
                         background="none"
-                        control-panel="none"
-                    />
+                        control-panel="none"/>
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
                     <MyButton color='primary' width='200px' onClick={giveUpGame}>{t('降参して答えを見る')}</MyButton>
@@ -253,6 +252,7 @@ function GameWithVirtual(props) {
                     <ErrorDisplay message={incorrectMessage}/>&nbsp;
                 </Box>
                 <Box display={"flex"} justifyContent={"center"}>
+                    <MyButton color='primary' width='120px' onClick={judgeSolution}>{t('回答する')}</MyButton>
                     <MyButton color='primary' width='120px' onClick={removeMove}>{t('1文字削除')}</MyButton>
                 </Box>
                 {notationList.map((oneNotationList, i) =>
@@ -278,7 +278,7 @@ function GameWithVirtual(props) {
                         <TwitterShareButton
                             url={t('I solved a')
                             + moveCount
-                            + t('手のバーチャル詰めキューブを')
+                            + t('手の詰めキューブをスクランブル画像のみで')
                             + timeLib.format(realTime)
                             + t('で解きました！')
                             + '\n'
@@ -315,19 +315,8 @@ function GameWithVirtual(props) {
                     </Button>
                 </DialogActions>
             </Dialog>
-            <Dialog open={openScramble} onClose={() => setOpenScramble(false)}>
-                <DialogContent>
-                    <DialogContentText>
-                        <Typography variant='body1'>
-                            {t('スクランブル')}:
-                            <br/>
-                            {scramble}
-                        </Typography>
-                    </DialogContentText>
-                </DialogContent>
-            </Dialog>
         </div>
     );
 }
 
-export default GameWithVirtual;
+export default GameWithoutCube;

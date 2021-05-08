@@ -50,8 +50,9 @@ const Home = (props) => {
     const [t, i18n] = useTranslation()
     const [open, setOpen] = useState(false)
     const [openWithVirtual, setOpenWithVirtual] = useState(false)
+    const [openWithoutCube, setOpenWithoutCube] = useState(false)
     const [lang, setLang] = useState('ja')
-    const moveCountList = [4, 5, 6, 7, 8]
+    const moveCountList = [2, 3, 4, 5, 6, 7, 8]
 
     useEffect(() => {
         twophase.initialize()
@@ -102,6 +103,11 @@ const Home = (props) => {
                     </Button>
                 </Box>
                 <Box className={classes.link} display={"flex"} justifyContent={"center"}>
+                    <Button className={classes.button} variant='contained' size='large' onClick={() => setOpenWithoutCube(true)}>
+                        {t('スクランブル画像のみでスタート')}
+                    </Button>
+                </Box>
+                <Box className={classes.link} display={"flex"} justifyContent={"center"}>
                     <Button className={classes.button} variant='contained' size='large' onClick={() => props.history.push('/about')}>
                         {t('遊び方')}
                     </Button>
@@ -133,6 +139,21 @@ const Home = (props) => {
                             <ListItem button key={moveCount}
                                       onClick={() => props.history.push({
                                           pathname: 'gameWithVirtual',
+                                          state: {
+                                              moveCount: moveCount
+                                          }
+                                      })}>
+                                <ListItemText primary={t('Challenge') + moveCount + t('手スクランブルに挑戦')}/>
+                            </ListItem>
+                    ))}
+                </List>
+            </Dialog>
+            <Dialog onClose={() => setOpenWithoutCube(false)} open={openWithoutCube}>
+                <List>
+                    {moveCountList.map((moveCount =>
+                            <ListItem button key={moveCount}
+                                      onClick={() => props.history.push({
+                                          pathname: 'gameWithoutCube',
                                           state: {
                                               moveCount: moveCount
                                           }

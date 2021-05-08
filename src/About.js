@@ -67,6 +67,36 @@ const About = (props) => {
                         {t('正解するとかかった時間が記録され、記録一覧画面で見ることができます')}
                     </Typography>
                 </Box>
+                <Box className={classes.link} display={"flex"} justifyContent={"center"}>
+                    <Typography variant='h5'>{t('用語')}</Typography>
+                </Box>
+                <Box className={classes.link} display={"flex"}>
+                    <Typography variant='h6' align='left'>{t('回転記号')}</Typography>
+                </Box>
+                <Box className={classes.link} display={"flex"}>
+                    <Typography variant='body1'>
+                        {t('ルービックキューブの回転を記号で表したものです。')}<br/>
+                        <ul>
+                            <li>{t('U = 上面, D = 下面, R = 右面, L = 左面, F = 前面, B = 後面')}</li>
+                            <li>{t('Uは上面を時計回りに90度回すこと')}</li>
+                            <li>{t('U\'は上面を反時計回りに90度回すこと')}</li>
+                            <li>{t('U2は上面を180度回すこと')}</li>
+                        </ul>
+                        {t('を意味します。')}
+                        {t('詰めキューブの回答はこの記号に沿って答えてください。')}<br/>
+                        {t('参考')}: <a href={t('回転記号の説明用URL')}>{t('回転記号の説明用ページタイトル')}</a>
+                    </Typography>
+                </Box>
+                <Box className={classes.link} display={"flex"}>
+                    <Typography variant='h6' align='left'>{t('スクランブル')}</Typography>
+                </Box>
+                <Box className={classes.link} display={"flex"}>
+                    <Typography variant='body1'>
+                        {t('回転記号の羅列によって表された、ルービックキューブの状態です。')}<br/>
+                        <br/>
+                        {t('スクランブルの回転記号通りにキューブを回すと、問題の状態がお手元のキューブで再現できます。')}
+                    </Typography>
+                </Box>
             </Box>
         </div>
     )
