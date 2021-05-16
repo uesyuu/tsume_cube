@@ -306,15 +306,6 @@ function Game(props) {
                 <DialogContent>
                     <DialogContentText align='center'>
                         {t('解法')}: {inverse.inverse(shortScramble)}<br/>
-                        <twisty-player
-                            style={{width: 'auto', height: 'fit-content'}}
-                            puzzle="3x3x3"
-                            experimental-setup-alg={shortScramble}
-                            alg={inverse.inverse(shortScramble)}
-                            hint-facelets="none"
-                            back-view="top-right"
-                            background="none"
-                        />
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
