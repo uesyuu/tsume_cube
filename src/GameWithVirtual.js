@@ -235,7 +235,7 @@ function GameWithVirtual(props) {
                         alg={inverse.inverse(scramble + ' ' + mySolutionStr)}
                         experimental-setup-anchor="end"
                         hint-facelets="none"
-                        back-view="none"
+                        back-view="top-right"
                         background="none"
                         control-panel="none"
                     />
@@ -304,6 +304,15 @@ function GameWithVirtual(props) {
                         {t('スクランブル')}:<br/>
                         {scramble}<br/>
                         {t('解法')}: {inverse.inverse(shortScramble)}<br/>
+                        <twisty-player
+                            style={{width: 'auto', height: 'fit-content'}}
+                            puzzle="3x3x3"
+                            experimental-setup-alg={shortScramble}
+                            alg={inverse.inverse(shortScramble)}
+                            hint-facelets="none"
+                            back-view="top-right"
+                            background="none"
+                        />
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
