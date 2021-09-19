@@ -1,4 +1,4 @@
-const twophase = (() => {
+const twoPhase = (() => {
 
 const U = 0;
 const F = 1;
@@ -820,4 +820,4 @@ return {
 
 })();
 
-export default twophase
+export default twoPhase
