@@ -1,5 +1,5 @@
 import React from "react";
-import {HashRouter as Router, Route} from "react-router-dom";
+import {BrowserRouter, Route} from "react-router-dom";
 import About from "./About";
 import Game from "./Game";
 import GameWithVirtual from "./GameWithVirtual";
@@ -9,7 +9,7 @@ import Results from "./Results";
 
 const App = () => {
     return (
-        <Router>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
             <div>
                 <Route exact path='/' component={Home} />
                 <Route path='/about' component={About} />
@@ -18,7 +18,7 @@ const App = () => {
                 <Route path='/gameWithoutCube' component={GameWithoutCube} />
                 <Route path='/results' component={Results} />
             </div>
-        </Router>
+        </BrowserRouter>
     )
 }
 
